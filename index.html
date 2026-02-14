@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="uz" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SimpleCalc</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+ 
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full overflow-auto" style="background: var(--bg-primary);">
+  <div id="app" class="min-h-full flex flex-col items-center justify-center p-4"><!-- Header -->
+   <div class="w-full max-w-sm mb-4 flex items-center justify-between">
+    <h1 id="app-title" class="text-xl font-bold" style="color: var(--text-primary);">SimpleCalc</h1><button id="theme-toggle" class="mode-toggle p-2 rounded-full" style="background: var(--bg-tertiary);" aria-label="Toggle theme">
+     <svg id="theme-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" style="color: var(--text-primary);"><path id="moon-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+     </svg></button>
+   </div><!-- Calculator -->
+   <div class="calculator-container w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden"><!-- Display Area -->
+    <div class="display-area p-6"><!-- Previous calculation -->
+     <div id="previous-display" class="text-right text-sm mb-2 h-6 overflow-hidden" style="color: var(--text-secondary);">
+     </div><!-- Current display -->
+     <div id="current-display" class="display-text text-right text-5xl font-semibold overflow-x-auto whitespace-nowrap" style="color: var(--text-primary);">
+      0
+     </div>
+    </div><!-- History Panel (collapsible) -->
+    <div id="history-panel" class="history-panel px-4 py-2 hidden">
+     <div class="flex items-center justify-between mb-2"><span class="text-sm font-medium" style="color: var(--text-secondary);">Tarix</span> <button id="clear-history" class="text-xs px-2 py-1 rounded" style="background: var(--function-bg); color: var(--text-primary);"> Tozalash </button>
+     </div>
+     <div id="history-list" class="max-h-32 overflow-y-auto scrollbar-thin space-y-1"><!-- History items will be added here -->
+     </div>
+    </div><!-- Toggle History Button -->
+    <div class="px-4 py-2 flex justify-center"><button id="toggle-history" class="text-xs flex items-center gap-1 px-3 py-1 rounded-full" style="background: var(--bg-tertiary); color: var(--text-secondary);"> <span id="history-toggle-text">Tarixni ko'rsatish</span>
+      <svg id="history-arrow" class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      </svg></button>
+    </div><!-- Buttons Grid -->
+    <div class="p-4 grid grid-cols-4 gap-3"><!-- Row 1 --> <button class="calc-btn function-btn h-16 rounded-2xl text-xl font-semibold" style="background: var(--function-bg); color: var(--text-primary);" data-action="clear">AC</button> <button class="calc-btn function-btn h-16 rounded-2xl text-xl font-semibold" style="background: var(--function-bg); color: var(--text-primary);" data-action="toggle-sign">+/−</button> <button class="calc-btn function-btn h-16 rounded-2xl text-xl font-semibold" style="background: var(--function-bg); color: var(--text-primary);" data-action="percent">%</button> <button class="calc-btn operator-btn h-16 rounded-2xl text-2xl font-semibold text-white" style="background: var(--operator-bg);" data-action="operator" data-operator="÷">÷</button> <!-- Row 2 --> <button class="calc-btn number-btn h-16 rounded-2xl text-2xl font-semibold" style="background: var(--number-bg); color: var(--text-primary);" data-action="number" data-number="7">7</button> <button class="calc-btn number-btn h-16 rounded-2xl text-2xl font-semibold" style="background: var(--number-bg); color: var(--text-primary);" data-action="number" data-number="8">8</button> <button class="calc-btn number-btn h-16 rounded-2xl text-2xl font-semibold" style="background: var(--number-bg); color: var(--text-primary);" data-action="number" data-number="9">9</button> <button class="calc-btn operator-btn h-16 rounded-2xl text-2xl font-semibold text-white" style="background: var(--operator-bg);" data-action="operator" data-operator="×">×</button> <!-- Row 3 --> <button class="calc-btn number-btn h-16 rounded-2xl text-2xl font-semibold" style="background: var(--number-bg); color: var(--text-primary);" data-action="number" data-number="4">4</button> <button class="calc-btn number-btn h-16 rounded-2xl text-2xl font-semibold" style="background: var(--number-bg); color: var(--text-primary);" data-action="number" data-number="5">5</button> <button class="calc-btn number-btn h-16 rounded-2xl text-2xl font-semibold" style="background: var(--number-bg); color: var(--text-primary);" data-action="number" data-number="6">6</button> <button class="calc-btn operator-btn h-16 rounded-2xl text-2xl font-semibold text-white" style="background: var(--operator-bg);" data-action="operator" data-operator="−">−</button> <!-- Row 4 --> <button class="calc-btn number-btn h-16 rounded-2xl text-2xl font-semibold" style="background: var(--number-bg); color: var(--text-primary);" data-action="number" data-number="1">1</button> <button class="calc-btn number-btn h-16 rounded-2xl text-2xl font-semibold" style="background: var(--number-bg); color: var(--text-primary);" data-action="number" data-number="2">2</button> <button class="calc-btn number-btn h-16 rounded-2xl text-2xl font-semibold" style="background: var(--number-bg); color: var(--text-primary);" data-action="number" data-number="3">3</button> <button class="calc-btn operator-btn h-16 rounded-2xl text-2xl font-semibold text-white" style="background: var(--operator-bg);" data-action="operator" data-operator="+">+</button> <!-- Row 5 --> <button class="calc-btn number-btn h-16 rounded-2xl text-2xl font-semibold col-span-2" style="background: var(--number-bg); color: var(--text-primary);" data-action="number" data-number="0">0</button> <button class="calc-btn number-btn h-16 rounded-2xl text-2xl font-semibold" style="background: var(--number-bg); color: var(--text-primary);" data-action="decimal">.</button> <button class="calc-btn equals-btn h-16 rounded-2xl text-2xl font-semibold text-white" style="background: var(--equals-bg);" data-action="equals">=</button> <!-- Row 6 - Extra functions --> <button class="calc-btn function-btn h-14 rounded-2xl text-lg font-semibold" style="background: var(--function-bg); color: var(--text-primary);" data-action="backspace">
+      <svg class="w-6 h-6 mx-auto" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414-6.414a2 2 0 011.414-.586H19a2 2 0 012 2v10a2 2 0 01-2 2h-8.172a2 2 0 01-1.414-.586L3 12z" />
+      </svg></button> <button class="calc-btn function-btn h-14 rounded-2xl text-lg font-semibold col-span-2" style="background: var(--function-bg); color: var(--text-primary);" data-action="copy"> <span class="flex items-center justify-center gap-2">
+       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+       </svg> Nusxalash </span> </button> <button class="calc-btn function-btn h-14 rounded-2xl text-sm font-semibold" style="background: var(--accent); color: white;" data-action="sqrt">√</button>
+    </div>
+   </div><!-- Keyboard hint -->
+   <div class="mt-4 text-center text-xs" style="color: var(--text-secondary);">
+    💡 Klaviatura orqali ham kiritish mumkin
+   </div><!-- Toast notification -->
+   <div id="toast" class="fixed bottom-8 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded-full text-sm font-medium hidden" style="background: var(--equals-bg); color: white;">
+    Nusxalandi!
+   </div>
+  </div>
+  <!-- Script -->
+  <script src="script.js"></script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cd9d179847830f4',t:'MTc3MTA0MzMwMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

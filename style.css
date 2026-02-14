@@ -1,0 +1,117 @@
+ * { font-family: 'Inter', system-ui, sans-serif; }
+    
+    .calc-btn {
+      transition: all 0.15s ease;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    .calc-btn:active {
+      transform: scale(0.95);
+    }
+    
+    .number-btn:hover {
+      background: var(--number-hover);
+    }
+    
+    .operator-btn:hover {
+      filter: brightness(1.1);
+    }
+    
+    .equals-btn:hover {
+      filter: brightness(1.1);
+    }
+    
+    .function-btn:hover {
+      background: var(--function-hover);
+    }
+    
+    .display-text {
+      font-variant-numeric: tabular-nums;
+    }
+    
+    .history-item {
+      animation: slideIn 0.3s ease;
+    }
+    
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .toast {
+      animation: toastIn 0.3s ease, toastOut 0.3s ease 1.7s forwards;
+    }
+    
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes toastOut {
+      from { opacity: 1; transform: translateY(0); }
+      to { opacity: 0; transform: translateY(20px); }
+    }
+    
+    .mode-toggle {
+      transition: all 0.3s ease;
+    }
+    
+    :root {
+      --bg-primary: #0A0A0A;
+      --bg-secondary: #1A1A1A;
+      --bg-tertiary: #2A2A2A;
+      --text-primary: #FFFFFF;
+      --text-secondary: #A0A0A0;
+      --number-bg: #333333;
+      --number-hover: #444444;
+      --function-bg: #505050;
+      --function-hover: #606060;
+      --operator-bg: #FF9500;
+      --equals-bg: #34C759;
+      --accent: #007AFF;
+    }
+    
+    .light-mode {
+      --bg-primary: #F5F5F5;
+      --bg-secondary: #FFFFFF;
+      --bg-tertiary: #E8E8E8;
+      --text-primary: #1A1A1A;
+      --text-secondary: #666666;
+      --number-bg: #E0E0E0;
+      --number-hover: #D0D0D0;
+      --function-bg: #C0C0C0;
+      --function-hover: #B0B0B0;
+    }
+    
+    .calculator-container {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+    }
+    
+    .display-area {
+      background: var(--bg-tertiary);
+    }
+    
+    .history-panel {
+      background: var(--bg-tertiary);
+    }
+    
+    .scrollbar-thin::-webkit-scrollbar {
+      width: 4px;
+    }
+    
+    .scrollbar-thin::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    
+    .scrollbar-thin::-webkit-scrollbar-thumb {
+      background: var(--text-secondary);
+      border-radius: 2px;
+    }
